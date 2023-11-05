@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+uuid=$1
+shift
+
+curl -fs -m 10 --retry 5 -o /dev/null "https://hc-ping.com/$uuid/start"
+
+if "$@"
+then
+    curl -fs -m 10 --retry 5 -o /dev/null "https://hc-ping.com/$uuid"
+else
+    curl -fs -m 10 --retry 5 -o /dev/null "https://hc-ping.com/$uuid/fail"
+fi
